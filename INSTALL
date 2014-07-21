@@ -1,0 +1,17 @@
+# Make directory for out-of-tree build
+mkdir Build
+
+# Go into directory
+cd Build
+
+# Call cmake to setup make file
+cmake ..
+
+# Build project
+make -j4 all 
+
+# Run the solver with the following options
+# p=1 (first order)
+# r=0 (no uniform refinement, i.e. use the original mesh)
+# s=0 (don't compute and show the eigenvectors)
+Source/ModeSolver -m ../Meshes/PhotonicWaveguidePml2.mesh -s0 -p1 -r0
