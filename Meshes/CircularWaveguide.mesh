@@ -1,0 +1,31 @@
+rp=1.0;
+rn=-1.0;
+vertices = [
+  [ 0, rn],   # vertex 0
+  [ rp, 0],   # vertex 1
+  [ 0, rp],   # vertex 2
+  [ rn, 0],   # vertex 3
+  [ 0, 0]     # vertex 4
+]
+
+elements = [
+  [ 0, 1, 4, "Air" ],  # tri 0
+  [ 1, 2, 4, "Air" ],  # tri 1
+  [ 2, 3, 4, "Air" ],  # tri 2
+  [ 3, 0, 4, "Air" ]   # tri 3
+]
+
+boundaries = [
+  [ 0, 1, "OuterBdy" ],
+  [ 1, 2, "OuterBdy" ],
+  [ 2, 3, "OuterBdy" ],
+  [ 3, 0, "OuterBdy" ]
+]
+
+curves = [
+  [ 0, 1, 90 ],  # circular arc with central angle of 45 degrees
+  [ 1, 2, 90 ],  # circular arc with central angle of 45 degrees
+  [ 2, 3, 90 ],  # circular arc with central angle of 45 degrees
+  [ 3, 0, 90 ]   # circular arc with central angle of 45 degrees
+]
+

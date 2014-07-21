@@ -1,0 +1,11 @@
+INCLUDE(FindPackageHandleStandardArgs)
+IF(CMAKE_BUILD_TYPE MATCHES DEBUG)
+  FIND_LIBRARY(HERMES_COMMON_LIBRARY NAMES libhermes_common-debug hermes_common-debug PATHS ${HERMES_DIRECTORY}/hermes_common /usr/lib /usr/local/lib)
+  MESSAGE("debug mode")
+ELSE(CMAKE_BUILD_TYPE MATCHES DEBUG)
+  FIND_LIBRARY(HERMES_COMMON_LIBRARY NAMES libhermes_common hermes_common libhermes_common-debug hermes_common-debug PATHS ${HERMES_DIRECTORY}/hermes_common /usr/lib /usr/local/lib)
+ENDIF() 
+
+MESSAGE(${HERMES_COMMON_LIBRARY})
+FIND_PATH(HERMES_COMMON_INCLUDE hermes_common.h ${HERMES_DIRECTORY}/hermes_common/include /usr/include/hermes_common /usr/local/include/hermes_common)
+FIND_PACKAGE_HANDLE_STANDARD_ARGS(HERMES_COMMON DEFAULT_MSG HERMES_COMMON_LIBRARY HERMES_COMMON_INCLUDE)
