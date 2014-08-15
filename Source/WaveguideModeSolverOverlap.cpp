@@ -5,7 +5,7 @@
 #include "WaveguideDefinitionsFields2.h"
 #include "ClockTickCounter.h"
 
-#include "Eigensolver/ArpackEigensolver.h"
+//#include "Eigensolver/ArpackEigensolver.h"
 
 #include <Eigen/SparseCore>
 #include <unsupported/Eigen/SparseExtra>
@@ -27,7 +27,6 @@ using namespace boost::program_options;
 // Define the parameters and material constants of our system
 const double a = 1e-6;      // Length scale (here 1um)
 const double c = 299792458; // Speed of light
-
 
 /**
  * Routine which takes a mesh and a list of materials and computes eigenvalues for a given fixed order, closest to targetKz.
@@ -111,62 +110,66 @@ WaveguideMode<T> findMode(MeshSharedPtr mesh, std::vector<Material<T>> materialL
   Eigen::MappedSparseMatrix<T> R(matrixRight->get_size(), matrixRight->get_size(), matrixRight->get_nnz(), matrixRight->get_Ap(), matrixRight->get_Ai(), matrixRight->get_Ax());
 
   // For debugging: Dump the matrices in matrix market format!
-//  Eigen::saveMarket(L,"Left.smat");
-//  Eigen::saveMarket(R,"Right.smat");
+  // THOSE MATRICES ARE NOT CORRECT!!!
+  Eigen::saveMarket(L,"Left.smat");
+  Eigen::saveMarket(R,"Right.smat");
+//
+//  // Call iterative eigensolver
+//  std::cout << "Starting Eigensolver..."; std::cout.flush();
+//  const auto eigensolverStartTime = monotonic_seconds();
+//  Math::ArpackSupport<Eigen::MappedSparseMatrix<T>> eigensolver(L, R, extractEigenvectors);
+//  const auto eigensolverSetupTime = monotonic_seconds();
+//  eigensolver.compute(-targetKz*targetKz, 4);
+//  const auto eigensolverComputeTime = monotonic_seconds();
+//  std::cout << "done (took " << eigensolverComputeTime - eigensolverStartTime << "s)!" << std::endl;
+//
+//  std::cout << "Starting eigenvalue extraction..."; std::cout.flush();
+//  Eigen::VectorXcd eigenvaluesRaw = -eigensolver.eigenvalues();
+//  std::cout << "done!" << std::endl;
+//
+//  // Iterate over all eigenvalues and keep only the interesting ones
+//  std::cout << "Starting eigenvalue filtering..."; std::cout.flush();
+//  std::vector<std::pair<std::complex<double>,unsigned int>> evList;
+//  for(unsigned int curEvIdx=0; curEvIdx<eigenvaluesRaw.size(); ++curEvIdx)
+//  {
+//    const std::complex<double> curEv = eigenvaluesRaw[curEvIdx];
+//    const T curKz = std::sqrt(curEv);
+//    const T curNeff = curKz/k0;
+//
+//      // Remove eigenvalues close to zero or with either real or imaginary part negative!
+//      if( (std::norm(curEv) > 0.001) && (std::real(curEv) > 0.0) && (std::imag(curNeff) > 0.0)  )
+//      {
+//        evList.push_back( std::make_pair(curEv, curEvIdx) );
+//      }
+//    }
+//  std::cout << "done!" << std::endl;
+//
+//  std::cout << "Starting eigenvalue sorting:" << std::endl;
+//    // Sort with closest to target!
+//    std::sort(evList.begin(),evList.end(),[&](const std::pair<std::complex<double>,unsigned int>& a, const std::pair<std::complex<double>,unsigned int>& b) -> bool { return std::norm(a.first-targetKz*targetKz) < std::norm(b.first-targetKz*targetKz);} );
+//
+//    // Print all filtered modes!
+//    for(auto& curEv : evList)
+//    {
+//      const std::complex<double> kz = std::sqrt(curEv.first);
+//
+//      std::cout << "n_eff = " << std::setprecision(16) << std::real(kz)/k0 << " " << std::imag(kz)/k0 << " Error: " << std::abs(std::real(kz) - std::real(targetKz))/std::abs(std::real(targetKz)) << ", " << std::abs(std::imag(kz) - std::imag(targetKz))/std::abs(std::imag(targetKz)) << " -- Target: " << targetKz << " Result: " << std::real(kz) << " " << std::imag(kz) << std::endl;
+//    }
+//
+//    const unsigned int modeIdx = 0;
+//
+//    // Pick the first mode and convert to a hermes solution (i.e. split the components)
+//    const std::complex<double> kz = std::sqrt(evList[modeIdx].first);
+////    targetKz = kz;
+//
+//  if( extractEigenvectors )
+//  {
+//    Eigen::Matrix<T, Eigen::Dynamic, 1> curEigenvector = eigensolver.eigenvectors().col(evList[modeIdx].second);
+//    Solution<T>::vector_to_solutions((T*)curEigenvector.data(), spaceWaveguide, Hermes::vector<MeshFunctionSharedPtr<T>>(slnEt, slnEz));
+//  }
 
-  // Call iterative eigensolver
-  std::cout << "Starting Eigensolver..."; std::cout.flush();
-  const auto eigensolverStartTime = monotonic_seconds();
-  Math::ArpackSupport<Eigen::MappedSparseMatrix<T>> eigensolver(L, R, extractEigenvectors);
-  const auto eigensolverSetupTime = monotonic_seconds();
-  eigensolver.compute(-targetKz*targetKz, 4);
-  const auto eigensolverComputeTime = monotonic_seconds();
-  std::cout << "done (took " << eigensolverComputeTime - eigensolverStartTime << "s)!" << std::endl;
-
-  std::cout << "Starting eigenvalue extraction..."; std::cout.flush();
-  Eigen::VectorXcd eigenvaluesRaw = -eigensolver.eigenvalues();
-  std::cout << "done!" << std::endl;
-
-  // Iterate over all eigenvalues and keep only the interesting ones
-  std::cout << "Starting eigenvalue filtering..."; std::cout.flush();
-  std::vector<std::pair<std::complex<double>,unsigned int>> evList;
-  for(unsigned int curEvIdx=0; curEvIdx<eigenvaluesRaw.size(); ++curEvIdx)
-  {
-    const std::complex<double> curEv = eigenvaluesRaw[curEvIdx];
-    const T curKz = std::sqrt(curEv);
-    const T curNeff = curKz/k0;
-
-      // Remove eigenvalues close to zero or with either real or imaginary part negative!
-      if( (std::norm(curEv) > 0.001) && (std::real(curEv) > 0.0) && (std::imag(curNeff) > 0.0)  )
-      {
-        evList.push_back( std::make_pair(curEv, curEvIdx) );
-      }
-    }
-  std::cout << "done!" << std::endl;
-
-  std::cout << "Starting eigenvalue sorting:" << std::endl;
-    // Sort with closest to target!
-    std::sort(evList.begin(),evList.end(),[&](const std::pair<std::complex<double>,unsigned int>& a, const std::pair<std::complex<double>,unsigned int>& b) -> bool { return std::norm(a.first-targetKz*targetKz) < std::norm(b.first-targetKz*targetKz);} );
-    
-    // Print all filtered modes!
-    for(auto& curEv : evList)
-    {
-      const std::complex<double> kz = std::sqrt(curEv.first);
-
-      std::cout << "n_eff = " << std::setprecision(16) << std::real(kz)/k0 << " " << std::imag(kz)/k0 << " Error: " << std::abs(std::real(kz) - std::real(targetKz))/std::abs(std::real(targetKz)) << ", " << std::abs(std::imag(kz) - std::imag(targetKz))/std::abs(std::imag(targetKz)) << " -- Target: " << targetKz << " Result: " << std::real(kz) << " " << std::imag(kz) << std::endl;
-    }
-
-    const unsigned int modeIdx = 0;
-
-    // Pick the first mode and convert to a hermes solution (i.e. split the components)
-    const std::complex<double> kz = std::sqrt(evList[modeIdx].first);
-//    targetKz = kz;
-
-  if( extractEigenvectors )
-  {
-    Eigen::Matrix<T, Eigen::Dynamic, 1> curEigenvector = eigensolver.eigenvectors().col(evList[modeIdx].second);
-    Solution<T>::vector_to_solutions((T*)curEigenvector.data(), spaceWaveguide, Hermes::vector<MeshFunctionSharedPtr<T>>(slnEt, slnEz));
-  }
+  // Just some fake eigenvalue so the code works without too many changes
+  const std::complex<double> kz(0,0);
 
   return WaveguideMode<T>(k0, kz, slnEt, slnEz);
 }

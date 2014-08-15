@@ -3,11 +3,6 @@ project(WaveguideModeSolver)
 
 	set(CMAKE_MODULE_PATH ${CMAKE_HOME_DIRECTORY}/CMakeMacros)
 	
-	# Where to look for the hermes libraries.
-	set(HERMES_DIRECTORY /home/jensn/workspace/hermes/)
-	set(HERMES_VERSION "HERMES2D")
-	set(EIGEN3_INCLUDE_DIR /home/jensn/workspace/eigen/)
-
 	# Allow to override the default values in CMake.vars:
 	include(CMake.vars OPTIONAL)
       
@@ -21,7 +16,7 @@ project(WaveguideModeSolver)
 	include_directories(${EIGEN3_INCLUDE_DIR})
 	add_definitions(-DEIGEN_USE_MKL_ALL)
 
-	find_package(MKL REQUIRED)
+	#find_package(MKL REQUIRED)
 
 	find_package(Boost 1.36.1 REQUIRED COMPONENTS program_options)
 	IF (Boost_FOUND)
@@ -31,10 +26,10 @@ project(WaveguideModeSolver)
 		MESSAGE (STATUS "BOOST libraries found in " ${Boost_LIBRARY_DIRS})
 	ENDIF()
 
-	find_package(ARPACK REQUIRED)
+	#find_package(ARPACK REQUIRED)
 
-	find_package(UMFPACK REQUIRED)
-	include_directories(${UMFPACK_INCLUDE_DIR})
+	#find_package(UMFPACK REQUIRED)
+	#include_directories(${UMFPACK_INCLUDE_DIR})
 
 	## === Now, some configuration for the various compilers ===
 
