@@ -78,7 +78,7 @@ WaveguideMode<T> findMode(MeshSharedPtr mesh, std::vector<Material<T>> materialL
   // Create an Hcurl space and an H1 space with default shapeset.
   SpaceSharedPtr<T>	spaceEt{ new HcurlSpace<T>(mesh, &bcsEt, order-1)};
   SpaceSharedPtr<T>  spaceEz{ new H1Space<T>(mesh, &bcsEz, order)};
-  Hermes::vector<SpaceSharedPtr<T>> spaceWaveguide(spaceEt, spaceEz);
+  std::vector<SpaceSharedPtr<T>> spaceWaveguide({spaceEt, spaceEz});
 
   // Initialize mesh solutions for both field components
   MeshFunctionSharedPtr<T> slnEt{ new Solution<T>()};

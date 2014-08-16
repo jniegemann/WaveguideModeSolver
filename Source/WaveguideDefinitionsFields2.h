@@ -46,7 +46,7 @@ public:
   }
 
   template<typename Real, typename Scalar>
-  Scalar matrix_form(int n, double *wt, Hermes::Hermes2D::Func<Scalar> *u_ext[], Hermes::Hermes2D::Func<Real> *u, Hermes::Hermes2D::Func<Real> *v, Hermes::Hermes2D::Geom<Real> *e, Hermes::Hermes2D::Func<Scalar>  **ext) const
+  Scalar matrix_form(int n, double *wt, Hermes::Hermes2D::Func<Scalar> *u_ext[], Hermes::Hermes2D::Func<Real> *u, Hermes::Hermes2D::Func<Real> *v, Hermes::Hermes2D::GeomVol<Real> *e, Hermes::Hermes2D::Func<Scalar>  **ext) const
   {
     Scalar result(0);
     for (int i = 0; i < n; i++)
@@ -57,12 +57,12 @@ public:
     return result;
   };
 
-  virtual T value(int n, double *wt, Hermes::Hermes2D::Func<T> *u_ext[], Hermes::Hermes2D::Func<double> *u, Hermes::Hermes2D::Func<double> *v, Hermes::Hermes2D::Geom<double> *e, Hermes::Hermes2D::Func<T>  **ext) const
+  virtual T value(int n, double *wt, Hermes::Hermes2D::Func<T> *u_ext[], Hermes::Hermes2D::Func<double> *u, Hermes::Hermes2D::Func<double> *v, Hermes::Hermes2D::GeomVol<double> *e, Hermes::Hermes2D::Func<T>  **ext) const
   {
     return matrix_form<double, T>(n, wt, u_ext, u, v, e, ext);
   }
 
-  virtual Hermes::Ord ord(int n, double *wt, Hermes::Hermes2D::Func<Hermes::Ord> *u_ext[], Hermes::Hermes2D::Func<Hermes::Ord> *u, Hermes::Hermes2D::Func<Hermes::Ord> *v, Hermes::Hermes2D::Geom<Hermes::Ord> *e, Hermes::Hermes2D::Func<Hermes::Ord>  **ext) const
+  virtual Hermes::Ord ord(int n, double *wt, Hermes::Hermes2D::Func<Hermes::Ord> *u_ext[], Hermes::Hermes2D::Func<Hermes::Ord> *u, Hermes::Hermes2D::Func<Hermes::Ord> *v, Hermes::Hermes2D::GeomVol<Hermes::Ord> *e, Hermes::Hermes2D::Func<Hermes::Ord>  **ext) const
   {
     return matrix_form<Hermes::Ord, Hermes::Ord>(n, wt, u_ext, u, v, e, ext);
   };
@@ -97,7 +97,7 @@ public:
   }
 
   template<typename Real, typename Scalar>
-  Scalar matrix_form(int n, double *wt, Hermes::Hermes2D::Func<Scalar> *u_ext[], Hermes::Hermes2D::Func<Real> *u, Hermes::Hermes2D::Func<Real> *v, Hermes::Hermes2D::Geom<Real> *e, Hermes::Hermes2D::Func<Scalar>  **ext) const
+  Scalar matrix_form(int n, double *wt, Hermes::Hermes2D::Func<Scalar> *u_ext[], Hermes::Hermes2D::Func<Real> *u, Hermes::Hermes2D::Func<Real> *v, Hermes::Hermes2D::GeomVol<Real> *e, Hermes::Hermes2D::Func<Scalar>  **ext) const
   {
     Scalar result(0);
     for (int i = 0; i < n; i++)
@@ -108,12 +108,12 @@ public:
     return result;
   };
 
-  virtual T value(int n, double *wt, Hermes::Hermes2D::Func<T> *u_ext[], Hermes::Hermes2D::Func<double> *u, Hermes::Hermes2D::Func<double> *v, Hermes::Hermes2D::Geom<double> *e, Hermes::Hermes2D::Func<T>  **ext) const
+  virtual T value(int n, double *wt, Hermes::Hermes2D::Func<T> *u_ext[], Hermes::Hermes2D::Func<double> *u, Hermes::Hermes2D::Func<double> *v, Hermes::Hermes2D::GeomVol<double> *e, Hermes::Hermes2D::Func<T>  **ext) const
   {
     return matrix_form<double, T>(n, wt, u_ext, u, v, e, ext);
   }
 
-  virtual Hermes::Ord ord(int n, double *wt, Hermes::Hermes2D::Func<Hermes::Ord> *u_ext[], Hermes::Hermes2D::Func<Hermes::Ord> *u, Hermes::Hermes2D::Func<Hermes::Ord> *v, Hermes::Hermes2D::Geom<Hermes::Ord> *e, Hermes::Hermes2D::Func<Hermes::Ord>  **ext) const
+  virtual Hermes::Ord ord(int n, double *wt, Hermes::Hermes2D::Func<Hermes::Ord> *u_ext[], Hermes::Hermes2D::Func<Hermes::Ord> *u, Hermes::Hermes2D::Func<Hermes::Ord> *v, Hermes::Hermes2D::GeomVol<Hermes::Ord> *e, Hermes::Hermes2D::Func<Hermes::Ord>  **ext) const
   {
     return matrix_form<Hermes::Ord, Hermes::Ord>(n, wt, u_ext, u, v, e, ext);
   };
@@ -148,18 +148,18 @@ public:
   }
  
   template<typename Real, typename Scalar>
-  Scalar matrix_form(int n, double *wt, Hermes::Hermes2D::Func<Scalar> *u_ext[], Hermes::Hermes2D::Func<Real> *u, Hermes::Hermes2D::Func<Real> *v, Hermes::Hermes2D::Geom<Real> *e, Hermes::Hermes2D::Func<Scalar>  **ext) const
+  Scalar matrix_form(int n, double *wt, Hermes::Hermes2D::Func<Scalar> *u_ext[], Hermes::Hermes2D::Func<Real> *u, Hermes::Hermes2D::Func<Real> *v, Hermes::Hermes2D::GeomVol<Real> *e, Hermes::Hermes2D::Func<Scalar>  **ext) const
   {
     Scalar result = Scalar(0); 
     for (int i = 0; i < n; i++) result += wt[i] * (u->dx[i] * invMuYY * v->val0[i] + u->dy[i] * invMuXX * v->val1[i]);
     return result;
   };
 
-  virtual T value(int n, double *wt, Hermes::Hermes2D::Func<T> *u_ext[], Hermes::Hermes2D::Func<double> *u, Hermes::Hermes2D::Func<double> *v, Hermes::Hermes2D::Geom<double> *e, Hermes::Hermes2D::Func<T>  **ext) const  {
+  virtual T value(int n, double *wt, Hermes::Hermes2D::Func<T> *u_ext[], Hermes::Hermes2D::Func<double> *u, Hermes::Hermes2D::Func<double> *v, Hermes::Hermes2D::GeomVol<double> *e, Hermes::Hermes2D::Func<T>  **ext) const  {
     return matrix_form<double, T>(n, wt, u_ext, u, v, e, ext);
   }
 
-  virtual Hermes::Ord ord(int n, double *wt, Hermes::Hermes2D::Func<Hermes::Ord> *u_ext[], Hermes::Hermes2D::Func<Hermes::Ord> *u, Hermes::Hermes2D::Func<Hermes::Ord> *v, Hermes::Hermes2D::Geom<Hermes::Ord> *e, Hermes::Hermes2D::Func<Hermes::Ord>  **ext) const
+  virtual Hermes::Ord ord(int n, double *wt, Hermes::Hermes2D::Func<Hermes::Ord> *u_ext[], Hermes::Hermes2D::Func<Hermes::Ord> *u, Hermes::Hermes2D::Func<Hermes::Ord> *v, Hermes::Hermes2D::GeomVol<Hermes::Ord> *e, Hermes::Hermes2D::Func<Hermes::Ord>  **ext) const
   {
     return matrix_form<Hermes::Ord, Hermes::Ord>(n, wt, u_ext, u, v, e, ext);
   };
@@ -201,7 +201,7 @@ public:
   }
 
   template<typename Real, typename Scalar>
-  Scalar matrix_form(int n, double *wt, Hermes::Hermes2D::Func<Scalar> *u_ext[], Hermes::Hermes2D::Func<Real> *u, Hermes::Hermes2D::Func<Real> *v, Hermes::Hermes2D::Geom<Real> *e, Hermes::Hermes2D::Func<Scalar> **ext) const
+  Scalar matrix_form(int n, double *wt, Hermes::Hermes2D::Func<Scalar> *u_ext[], Hermes::Hermes2D::Func<Real> *u, Hermes::Hermes2D::Func<Real> *v, Hermes::Hermes2D::GeomVol<Real> *e, Hermes::Hermes2D::Func<Scalar> **ext) const
   {
     Scalar result(0);
     for (int i = 0; i < n; i++)
@@ -212,12 +212,12 @@ public:
     return result;
   };
 
-  virtual T value(int n, double *wt, Hermes::Hermes2D::Func<T> *u_ext[], Hermes::Hermes2D::Func<double> *u, Hermes::Hermes2D::Func<double> *v, Hermes::Hermes2D::Geom<double> *e, Hermes::Hermes2D::Func<T>  **ext) const
+  virtual T value(int n, double *wt, Hermes::Hermes2D::Func<T> *u_ext[], Hermes::Hermes2D::Func<double> *u, Hermes::Hermes2D::Func<double> *v, Hermes::Hermes2D::GeomVol<double> *e, Hermes::Hermes2D::Func<T>  **ext) const
   {
     return matrix_form<double, T>(n, wt, u_ext, u, v, e, ext);
   }
 
-  virtual Hermes::Ord ord(int n, double *wt, Hermes::Hermes2D::Func<Hermes::Ord> *u_ext[], Hermes::Hermes2D::Func<Hermes::Ord> *u, Hermes::Hermes2D::Func<Hermes::Ord> *v, Hermes::Hermes2D::Geom<Hermes::Ord> *e, Hermes::Hermes2D::Func<Hermes::Ord>  **ext) const
+  virtual Hermes::Ord ord(int n, double *wt, Hermes::Hermes2D::Func<Hermes::Ord> *u_ext[], Hermes::Hermes2D::Func<Hermes::Ord> *u, Hermes::Hermes2D::Func<Hermes::Ord> *v, Hermes::Hermes2D::GeomVol<Hermes::Ord> *e, Hermes::Hermes2D::Func<Hermes::Ord>  **ext) const
   {
     return matrix_form<Hermes::Ord, Hermes::Ord>(n, wt, u_ext, u, v, e, ext);
   };
@@ -254,24 +254,24 @@ public:
   }
 
   template<typename Real, typename Scalar>
-  Scalar matrix_form(int n, double *wt, Hermes::Hermes2D::Func<Scalar> *u_ext[], Hermes::Hermes2D::Func<Real> *u, Hermes::Hermes2D::Func<Real> *v, Hermes::Hermes2D::Geom<Real> *e, Hermes::Hermes2D::Func<Scalar>  **ext) const
+  Scalar matrix_form(int n, double *wt, Hermes::Hermes2D::Func<Scalar> *u_ext[], Hermes::Hermes2D::Func<Real> *u, Hermes::Hermes2D::Func<Real> *v, Hermes::Hermes2D::GeomVol<Real> *e, Hermes::Hermes2D::Func<Scalar>  **ext) const
   {
     Scalar result = Scalar(0); 
     for (int i = 0; i < n; i++) result += wt[i] * (u->val0[i] * invMuYY * v->dx[i] + u->val1[i] * invMuXX * v->dy[i]);
     return result;
   };
 
-  virtual T value(int n, double *wt, Hermes::Hermes2D::Func<T> *u_ext[], Hermes::Hermes2D::Func<double> *u, Hermes::Hermes2D::Func<double> *v, Hermes::Hermes2D::Geom<double> *e, Hermes::Hermes2D::Func<T>  **ext) const
+  virtual T value(int n, double *wt, Hermes::Hermes2D::Func<T> *u_ext[], Hermes::Hermes2D::Func<double> *u, Hermes::Hermes2D::Func<double> *v, Hermes::Hermes2D::GeomVol<double> *e, Hermes::Hermes2D::Func<T>  **ext) const
   {
     return matrix_form<double, T>(n, wt, u_ext, u, v, e, ext);
   }
 
-  virtual Hermes::Ord ord(int n, double *wt, Hermes::Hermes2D::Func<Hermes::Ord> *u_ext[], Hermes::Hermes2D::Func<Hermes::Ord> *u, Hermes::Hermes2D::Func<Hermes::Ord> *v, Hermes::Hermes2D::Geom<Hermes::Ord> *e, Hermes::Hermes2D::Func<Hermes::Ord>  **ext) const
+  virtual Hermes::Ord ord(int n, double *wt, Hermes::Hermes2D::Func<Hermes::Ord> *u_ext[], Hermes::Hermes2D::Func<Hermes::Ord> *u, Hermes::Hermes2D::Func<Hermes::Ord> *v, Hermes::Hermes2D::GeomVol<Hermes::Ord> *e, Hermes::Hermes2D::Func<Hermes::Ord>  **ext) const
   {
     return matrix_form<Hermes::Ord, Hermes::Ord>(n, wt, u_ext, u, v, e, ext);
   };
 
-  CustomMatrixE<T>* clone() const
+  Hermes::Hermes2D::MatrixFormVol<T>* clone() const
   {
     return new CustomMatrixE(i, j, areas[0], invMuXX, invMuYY);
   };
